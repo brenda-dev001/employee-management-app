@@ -24,7 +24,8 @@ fun AppNavigation(
             HomeScreen(
                 onInsertEmployeeClick = {
                     navController.navigate(Routes.INSERT)
-                }
+                },
+                viewModel = viewModel
             )
         }
 
