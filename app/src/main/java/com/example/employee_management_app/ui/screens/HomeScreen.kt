@@ -57,12 +57,15 @@ import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import com.example.employee_management_app.ui.theme.Purple80
 import com.example.employee_management_app.ui.theme.TextPrimary
+import com.google.apps.card.v1.OnClick
 import kotlin.contracts.contract
 
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    onInsertEmployeeClick: () -> Unit
+){
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -148,7 +151,7 @@ fun HomeScreen(){
                 Column(modifier = Modifier.padding(end = 10.dp)
                     .align(alignment = Alignment.End),
                 ) {
-                    Button(onClick = {},
+                    Button(onClick = {onInsertEmployeeClick()},
                         modifier = Modifier.size(55.dp),
                         contentPadding = PaddingValues(0.dp),
                         colors = ButtonDefaults.buttonColors(
@@ -181,7 +184,8 @@ fun HomeScreen(){
                             containerColor = Purple80,
                             contentColor = Primary,
                             disabledContainerColor = Color.Transparent
-                        )
+                        ),
+                        enabled = false
                     ) {
                         Icon(
                             imageVector = Icons.Default.People,
@@ -233,5 +237,5 @@ fun HomeScreen(){
 @Preview
 @Composable
 fun HomeScreenPreview(){
-    HomeScreen()
+    HomeScreen(onInsertEmployeeClick = {})
 }
