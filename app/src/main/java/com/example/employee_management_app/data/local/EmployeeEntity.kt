@@ -3,7 +3,7 @@ package com.example.employee_management_app.data.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "tb_employee")
+@Entity(tableName = "employees")
 data class EmployeeEntity(
     val name: String,
     @PrimaryKey
