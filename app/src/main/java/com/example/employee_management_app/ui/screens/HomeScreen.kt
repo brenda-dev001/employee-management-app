@@ -1,6 +1,5 @@
 package com.example.employee_management_app.ui.screens
 
-import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,6 +54,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import com.example.employee_management_app.ui.theme.Purple80
 import com.example.employee_management_app.ui.theme.TextPrimary
 import kotlin.contracts.contract
@@ -75,8 +75,7 @@ fun HomeScreen(){
                 titleContentColor = Surface
             )
         )
-        Box(modifier = Modifier.fillMaxWidth()
-            .fillMaxHeight(.8f)
+        Column(modifier = Modifier.fillMaxWidth()
             .padding(20.dp)
         ) {
             Column(modifier = Modifier.fillMaxWidth()
@@ -139,88 +138,94 @@ fun HomeScreen(){
                     }
                 }
             }
-
-            Column(modifier = Modifier.padding(end = 10.dp)
-                .align(alignment = Alignment.BottomEnd),
-            ) {
-                Button(onClick = {},
-                    modifier = Modifier.size(55.dp),
-                    contentPadding = PaddingValues(0.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Primary,
-                        contentColor = Surface
-                    ),
-                    elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 3.dp
-                    )
-
-                ) {
-                    Icon(modifier = Modifier.size(20.dp),
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add icon"
-                    )
-                }
-            }
         }
 
-        Row(modifier = Modifier.fillMaxWidth()
-            .fillMaxHeight()
-            .background(color = Surface)
-            .padding(top = 5.dp, bottom = 5.dp, start = 10.dp, end = 10.dp),
-            horizontalArrangement = Arrangement.SpaceAround
-        )
+        Column(modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom)
         {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(onClick = {},
-                    modifier = Modifier.width(90.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Purple80,
-                        contentColor = Primary,
-                        disabledContainerColor = Color.Transparent
-                    )
+
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(end = 10.dp)
+                    .align(alignment = Alignment.End),
+                ) {
+                    Button(onClick = {},
+                        modifier = Modifier.size(55.dp),
+                        contentPadding = PaddingValues(0.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Primary,
+                            contentColor = Surface
+                        ),
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 3.dp
+                        )
+
                     ) {
-                    Icon(
-                        imageVector = Icons.Default.People,
-                        contentDescription = "Icon people"
-                    )
+                        Icon(modifier = Modifier.size(20.dp),
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Add icon"
+                        )
+                    }
                 }
-                Text(text = "Employees", color = Primary, fontWeight = FontWeight.Bold)
             }
-
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(onClick = {},
-                    modifier = Modifier.width(90.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Purple80,
-                        contentColor = Primary,
-                        disabledContainerColor = Color.Transparent
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.CloudQueue,
-                        contentDescription = "Icon cloud"
-                    )
+            Spacer(Modifier.size(20.dp))
+            Row(modifier = Modifier.fillMaxWidth()
+                .background(color = Surface)
+                .padding(top = 5.dp, bottom = 5.dp, start = 10.dp, end = 10.dp),
+                horizontalArrangement = Arrangement.SpaceAround
+            )
+            {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Button(onClick = {},
+                        modifier = Modifier.width(90.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Purple80,
+                            contentColor = Primary,
+                            disabledContainerColor = Color.Transparent
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.People,
+                            contentDescription = "Icon people"
+                        )
+                    }
+                    Text(text = "Employees", color = Primary, fontWeight = FontWeight.Bold)
                 }
-                Text(text = "Backup", color = Primary, fontWeight = FontWeight.Bold)
-            }
 
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(onClick = {},
-                    modifier = Modifier.width(90.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Purple80,
-                        contentColor = Primary,
-                        disabledContainerColor = Color.Transparent
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.BarChart,
-                        contentDescription = "Icon statistics"
-                    )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Button(onClick = {},
+                        modifier = Modifier.width(90.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Purple80,
+                            contentColor = Primary,
+                            disabledContainerColor = Color.Transparent
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.CloudQueue,
+                            contentDescription = "Icon cloud"
+                        )
+                    }
+                    Text(text = "Backup", color = Primary, fontWeight = FontWeight.Bold)
                 }
-                Text(text = "Statistics", color = Primary, fontWeight = FontWeight.Bold)
-            }
 
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Button(onClick = {},
+                        modifier = Modifier.width(90.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Purple80,
+                            contentColor = Primary,
+                            disabledContainerColor = Color.Transparent
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.BarChart,
+                            contentDescription = "Icon statistics"
+                        )
+                    }
+                    Text(text = "Statistics", color = Primary, fontWeight = FontWeight.Bold)
+                }
+
+            }
         }
     }
 }
