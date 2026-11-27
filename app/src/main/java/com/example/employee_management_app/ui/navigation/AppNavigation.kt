@@ -6,10 +6,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.employee_management_app.ui.screens.AddEmployeeScreen
+import com.example.employee_management_app.ui.screens.EmployeeViewModel
 import com.example.employee_management_app.ui.screens.HomeScreen
 
 @Composable
-fun AppNavigation(){
+fun AppNavigation(
+    viewModel: EmployeeViewModel
+){
 
     val navController = rememberNavController()
 
@@ -29,7 +32,8 @@ fun AppNavigation(){
             AddEmployeeScreen(
                 onBackClick = {
                     navController.popBackStack()
-                }
+                },
+                viewModel = viewModel
             )
         }
     }
