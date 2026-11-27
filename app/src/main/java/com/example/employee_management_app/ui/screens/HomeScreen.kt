@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -52,6 +54,7 @@ import androidx.compose.material.icons.filled.StackedBarChart
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.modifier.modifierLocalConsumer
@@ -64,7 +67,8 @@ import kotlin.contracts.contract
 
 @Composable
 fun HomeScreen(
-    onInsertEmployeeClick: () -> Unit
+    onInsertEmployeeClick: () -> Unit,
+    viewModel: EmployeeViewModel
 ){
 
     Column(
@@ -78,65 +82,72 @@ fun HomeScreen(
                 titleContentColor = Surface
             )
         )
-        Column(modifier = Modifier.fillMaxWidth()
-            .padding(20.dp)
-        ) {
-            Column(modifier = Modifier.fillMaxWidth()
-                .background(color = Surface, RoundedCornerShape(12.dp))
-                .padding(10.dp)
-            ) {
-                Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Row(modifier = Modifier.size(50.dp)
-                            .background(color = Purple80, shape = RoundedCornerShape(100.dp)),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Icon(modifier = Modifier.size(35.dp),
-                                imageVector = Icons.Default.PermIdentity,
-                                contentDescription = "Person icon",
-                                tint = Primary
-                            )
-                        }
-                        Spacer(modifier = Modifier.size(20.dp))
-                        Column() {
-                            Text(text = "UserName", fontSize = 17.sp, fontWeight = FontWeight.Bold)
-                            Spacer(modifier = Modifier.size(5.dp))
-                            Text(text = "CPF: " + "123.456.789-10")
-                            Spacer(modifier = Modifier.size(5.dp))
-                            Text(text = "Sector: " + "ADM")
-                        }
-                    }
-                    Row() {
-                        Button(onClick = {},
-                            modifier = Modifier.size(50.dp),
-                            contentPadding = PaddingValues(0.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Transparent,
-                                contentColor = Primary
-                            )
-                        ) {
-                            Icon(modifier = Modifier.size(20.dp),
-                                imageVector = Icons.Default.Edit,
-                                contentDescription = "Edit icon",
-                            )
-                        }
 
-                        Button(onClick = {},
-                            modifier = Modifier.size(50.dp),
-                            contentPadding = PaddingValues(0.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Transparent,
-                                contentColor = Red
-                            )
+        LaunchedEffect(Unit) {
+            viewModel.getAll()
+        }
+
+        LazyColumn() {
+            items(viewModel.listEmployees){ employee ->
+                Column() {
+                    Column(modifier = Modifier.fillMaxWidth()
+                        .background(color = Surface, RoundedCornerShape(12.dp))
+                        .padding(10.dp)
+                    ) {
+                        Row(modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(modifier = Modifier.size(25.dp),
-                                imageVector = Icons.Default.DeleteOutline,
-                                contentDescription = "Remove icon"
-                            )
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Row(modifier = Modifier.size(50.dp)
+                                    .background(color = Purple80, shape = RoundedCornerShape(100.dp)),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(modifier = Modifier.size(35.dp),
+                                        imageVector = Icons.Default.PermIdentity,
+                                        contentDescription = "Person icon",
+                                        tint = Primary
+                                    )
+                                }
+                                Spacer(modifier = Modifier.size(20.dp))
+                                Column() {
+                                    Text(text = employee.name, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                                    Spacer(modifier = Modifier.size(5.dp))
+                                    Text(text = "CPF: " + employee.cpf)
+                                    Spacer(modifier = Modifier.size(5.dp))
+                                    Text(text = "Sector: " + employee.sector)
+                                }
+                            }
+                            Row() {
+                                Button(onClick = {},
+                                    modifier = Modifier.size(50.dp),
+                                    contentPadding = PaddingValues(0.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color.Transparent,
+                                        contentColor = Primary
+                                    )
+                                ) {
+                                    Icon(modifier = Modifier.size(20.dp),
+                                        imageVector = Icons.Default.Edit,
+                                        contentDescription = "Edit icon",
+                                    )
+                                }
+
+                                Button(onClick = {},
+                                    modifier = Modifier.size(50.dp),
+                                    contentPadding = PaddingValues(0.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color.Transparent,
+                                        contentColor = Red
+                                    )
+                                ) {
+                                    Icon(modifier = Modifier.size(25.dp),
+                                        imageVector = Icons.Default.DeleteOutline,
+                                        contentDescription = "Remove icon"
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -232,10 +243,4 @@ fun HomeScreen(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun HomeScreenPreview(){
-    HomeScreen(onInsertEmployeeClick = {})
 }
