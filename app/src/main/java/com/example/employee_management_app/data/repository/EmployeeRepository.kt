@@ -15,4 +15,11 @@ class EmployeeRepository(
             .set(employee)
             .await()
     }
+
+    suspend fun getAll() : List<Employee>{
+        return db.collection("employees")
+            .get()
+            .await()
+            .toObjects(Employee::class.java)
+    }
 }
