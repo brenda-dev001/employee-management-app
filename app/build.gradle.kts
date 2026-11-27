@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.employee_management_app"
-        minSdk = 33
+        minSdk = 31
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
