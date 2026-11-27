@@ -1,10 +1,7 @@
 package com.example.employee_management_app.ui.screens
 
-import android.R
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,11 +14,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.PermIdentity
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -30,11 +25,8 @@ import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedIconToggleButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,11 +41,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.employee_management_app.ui.theme.Primary
 import com.example.employee_management_app.ui.theme.Surface
-import kotlin.collections.mutableListOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddEmployeeScreen(){
+fun AddEmployeeScreen(
+    onBackClick: () -> Unit
+){
 
     var name by remember { mutableStateOf("") }
     var cpf by remember { mutableStateOf("") }
@@ -81,7 +74,7 @@ fun AddEmployeeScreen(){
             .background(color = Primary)
             .padding(5.dp)
         ) {
-            Button(onClick = {},
+            Button(onClick = {onBackClick()},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
                     contentColor = Surface
@@ -193,5 +186,5 @@ fun AddEmployeeScreen(){
 @Preview
 @Composable
 fun AddEmployeeScreenPreview(){
-    AddEmployeeScreen()
+    AddEmployeeScreen(onBackClick = {})
 }
