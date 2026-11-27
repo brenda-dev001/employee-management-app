@@ -38,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.firebase.firestore)
     val roomVersion = "2.8.5"
 
