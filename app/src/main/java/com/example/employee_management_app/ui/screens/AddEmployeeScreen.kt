@@ -1,5 +1,6 @@
 package com.example.employee_management_app.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -28,6 +30,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,17 +38,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.employee_management_app.data.model.Employee
 import com.example.employee_management_app.ui.theme.Primary
 import com.example.employee_management_app.ui.theme.Surface
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEmployeeScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: EmployeeViewModel
 ){
 
     var name by remember { mutableStateOf("") }
@@ -54,6 +60,7 @@ fun AddEmployeeScreen(
     var salary by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
     var sector by remember { mutableStateOf("") }
+    val context = LocalContext.current
     val sectors = listOf(
         "IT",
         "Human Resources",
@@ -107,7 +114,8 @@ fun AddEmployeeScreen(
                 onValueChange = { cpf = it },
                 shape = RoundedCornerShape(20.dp),
                 placeholder = { Text(text = "Your CPF") },
-                label = {Text("CPF")}
+                label = {Text("CPF")},
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
             )
 
             OutlinedTextField(modifier = Modifier.fillMaxWidth(.9f),
@@ -115,14 +123,16 @@ fun AddEmployeeScreen(
                 onValueChange = { age = it },
                 shape = RoundedCornerShape(20.dp),
                 placeholder = { Text(text = "Your age") },
-                label = {Text("Age")}
+                label = {Text("Age")},
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
             )
             OutlinedTextField(modifier = Modifier.fillMaxWidth(.9f),
                 value = salary,
                 onValueChange = { salary = it },
                 shape = RoundedCornerShape(20.dp),
                 placeholder = { Text(text = "Your salary") },
-                label = {Text("Salary")}
+                label = {Text("Salary")},
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
             ExposedDropdownMenuBox(
@@ -168,7 +178,21 @@ fun AddEmployeeScreen(
             .padding(end = 20.dp),
             horizontalAlignment = Alignment.End
         ) {
-            Button(onClick = {},
+            Button(onClick = {
+                if(name.isNotEmpty() &&
+                    cpf.isNotEmpty() &&
+                    age.isNotEmpty() &&
+                    salary.isNotEmpty()
+                    ){
+                    val newAge = age.toIntOrNull()
+                    val newSalary = salary.toDoubleOrNull()
+
+                    if(newAge != null && newSalary != null){
+                        val employee = Employee(name, cpf, newAge, newSalary, sector)
+                        viewModel.insertEmployee(employee)
+                    }
+                }
+            },
                 modifier = Modifier.width(120.dp),
                 shape = RoundedCornerShape(15.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -180,11 +204,11 @@ fun AddEmployeeScreen(
                 Text(text = "Insert", fontWeight = FontWeight.Bold, fontSize = 17.sp)
             }
         }
+        LaunchedEffect(viewModel.message) {
+            if(viewModel.message.isNotEmpty()){
+                Toast.makeText(context, viewModel.message, Toast.LENGTH_SHORT).show()
+                viewModel.clearMessage()
+            }
+        }
     }
-}
-
-@Preview
-@Composable
-fun AddEmployeeScreenPreview(){
-    AddEmployeeScreen(onBackClick = {})
 }
