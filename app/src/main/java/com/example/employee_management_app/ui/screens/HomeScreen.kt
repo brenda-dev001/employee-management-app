@@ -55,6 +55,7 @@ import com.example.employee_management_app.ui.theme.Purple80
 @Composable
 fun HomeScreen(
     onInsertEmployeeClick: () -> Unit,
+    onUpdateEmployeeClick: () -> Unit,
     viewModel: EmployeeViewModel
 ){
 
@@ -131,7 +132,10 @@ fun HomeScreen(
                                 }
                             }
                             Row() {
-                                Button(onClick = {},
+                                Button(onClick = {
+                                    viewModel.employee = employee
+                                    onUpdateEmployeeClick()
+                                },
                                     modifier = Modifier.size(50.dp),
                                     contentPadding = PaddingValues(0.dp),
                                     colors = ButtonDefaults.buttonColors(
