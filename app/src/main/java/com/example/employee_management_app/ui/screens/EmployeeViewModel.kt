@@ -21,6 +21,8 @@ class EmployeeViewModel(
     var listEmployees by mutableStateOf<List<Employee>>(emptyList())
         private set
 
+    var employee by mutableStateOf<Employee?>(null)
+
     fun insertEmployee(employee: Employee){
         viewModelScope.launch {
             try {
@@ -42,6 +44,19 @@ class EmployeeViewModel(
             }catch(e: FirebaseFirestoreException){
                 Log.e("EmployeeViewModel", "Firestore error!", e)
             }catch (e: Exception){
+                Log.e("EmployeeViewModel", "Unexpected error!", e)
+            }
+        }
+    }
+
+    fun updateEmployee(employeeUpdate: Employee){
+        viewModelScope.launch {
+            try {
+                repository.updateEmployee(employeeUpdate)
+                message = "Employee update successfully!"
+
+            }catch (e: Exception){
+                message = "Error updating employee!"
                 Log.e("EmployeeViewModel", "Unexpected error!", e)
             }
         }

@@ -30,4 +30,17 @@ class EmployeeRepository(
             }
         }
     }
+
+    suspend fun updateEmployee(employee: Employee){
+        val employee = db.collection("employees")
+            .document(employee.cpf)
+            .update(
+                mapOf(
+                    "name" to employee.name,
+                    "age" to employee.age,
+                    "salary" to employee.salary,
+                    "sector" to employee.sector
+                )
+            ).await()
+    }
 }
